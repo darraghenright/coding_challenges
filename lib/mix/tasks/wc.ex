@@ -14,10 +14,12 @@ defmodule Mix.Tasks.Wc do
         aliases: [
           c: :bytes,
           l: :lines,
+          m: :characters,
           w: :words
         ],
         strict: [
           bytes: :boolean,
+          characters: :boolean,
           lines: :boolean,
           words: :boolean
         ]
@@ -25,8 +27,9 @@ defmodule Mix.Tasks.Wc do
 
     response =
       case opts do
-        [bytes: true] -> Wc.bytes!(file)
         [lines: true] -> Wc.lines!(file)
+        [bytes: true] -> Wc.bytes!(file)
+        [characters: true] -> Wc.characters!(file)
         [words: true] -> Wc.words!(file)
       end
 

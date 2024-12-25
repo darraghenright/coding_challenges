@@ -36,6 +36,17 @@ defmodule Mix.Tasks.WcTest do
     end
   end
 
+  describe "wc --characters" do
+    test "should return multibyte characters and path for a readable file" do
+      response =
+        capture_io(fn ->
+          Wc.run(["--characters", test_file()])
+        end)
+
+      assert response == "339292 #{test_file()}\n"
+    end
+  end
+
   describe "wc --lines" do
     test "should return lines and path for a readable file" do
       response =
