@@ -6,7 +6,18 @@ defmodule Mix.Tasks.WcTest do
   import TestHelper
   import ExUnit.CaptureIO
 
-  describe "wc --bytes" do
+  describe "wc with no options" do
+    test "should return lines, words and bytes for a readable file" do
+      response =
+        capture_io(fn ->
+          Wc.run([test_file()])
+        end)
+
+      assert response == "7145 58164 342190 #{test_file()}\n"
+    end
+  end
+
+  describe "wc --bytes/c" do
     test "should return bytes and path for a readable file" do
       response =
         capture_io(fn ->
@@ -24,30 +35,20 @@ defmodule Mix.Tasks.WcTest do
 
       assert response == "342190 #{test_file()}\n"
     end
-
-    @tag :skip
-    test "missing file arg should be a no-op for now" do
-      response =
-        capture_io(fn ->
-          Wc.run(["--bytes"])
-        end)
-
-      assert response == ""
-    end
   end
 
-  describe "wc --characters" do
-    test "should return multibyte characters and path for a readable file" do
+  describe "wc --chars/m" do
+    test "should return multibyte chars and path for a readable file" do
       response =
         capture_io(fn ->
-          Wc.run(["--characters", test_file()])
+          Wc.run(["--chars", test_file()])
         end)
 
       assert response == "339292 #{test_file()}\n"
     end
   end
 
-  describe "wc --lines" do
+  describe "wc --lines/l" do
     test "should return lines and path for a readable file" do
       response =
         capture_io(fn ->
@@ -67,7 +68,7 @@ defmodule Mix.Tasks.WcTest do
     end
   end
 
-  describe "wc --words" do
+  describe "wc --words/w" do
     test "should return words and path for a readable file" do
       response =
         capture_io(fn ->

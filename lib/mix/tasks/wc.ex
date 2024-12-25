@@ -14,12 +14,12 @@ defmodule Mix.Tasks.Wc do
         aliases: [
           c: :bytes,
           l: :lines,
-          m: :characters,
+          m: :chars,
           w: :words
         ],
         strict: [
           bytes: :boolean,
-          characters: :boolean,
+          chars: :boolean,
           lines: :boolean,
           words: :boolean
         ]
@@ -27,10 +27,11 @@ defmodule Mix.Tasks.Wc do
 
     response =
       case opts do
-        [lines: true] -> Wc.lines!(file)
         [bytes: true] -> Wc.bytes!(file)
-        [characters: true] -> Wc.characters!(file)
+        [chars: true] -> Wc.chars!(file)
+        [lines: true] -> Wc.lines!(file)
         [words: true] -> Wc.words!(file)
+        [] -> Enum.join([Wc.lines!(file), Wc.words!(file), Wc.bytes!(file)], " ")
       end
 
     IO.puts("#{response} #{file}")

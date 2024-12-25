@@ -29,20 +29,20 @@ defmodule CodingChallenges.WcTest do
     end
   end
 
-  describe "characters!/1" do
-    test "should return the number of multibyte characters in the file" do
-      assert Wc.characters!(test_file()) == 339_292
+  describe "chars!/1" do
+    test "should return the number of multibyte chars in the file" do
+      assert Wc.chars!(test_file()) == 339_292
     end
 
     test "should raise an error if the file does not exist" do
       assert_raise File.Error, fn ->
-        Wc.characters!("non_existent_file.txt")
+        Wc.chars!("non_existent_file.txt")
       end
     end
 
     test "should raise an error if the file argument is not a binary" do
       assert_raise FunctionClauseError, fn ->
-        Wc.characters!(123)
+        Wc.chars!(123)
       end
     end
   end

@@ -17,11 +17,11 @@ defmodule CodingChallenges.Wc do
   end
 
   @doc """
-  Counts the number of multibyte characters in a given
+  Counts the number of multibyte chars in a given
   file. Raises an error if the file does not exist.
   """
-  @spec characters!(binary()) :: non_neg_integer()
-  def characters!(file) when is_binary(file) do
+  @spec chars!(binary()) :: non_neg_integer()
+  def chars!(file) when is_binary(file) do
     file
     |> File.stream!([], 1_024 * 8)
     |> Enum.reduce(0, fn char, acc ->
