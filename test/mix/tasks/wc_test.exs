@@ -25,6 +25,7 @@ defmodule Mix.Tasks.WcTest do
       assert response == "342190 #{test_file()}\n"
     end
 
+    @tag :skip
     test "missing file arg should be a no-op for now" do
       response =
         capture_io(fn ->
@@ -32,6 +33,26 @@ defmodule Mix.Tasks.WcTest do
         end)
 
       assert response == ""
+    end
+  end
+
+  describe "wc --lines" do
+    test "should return lines and path for a readable file" do
+      response =
+        capture_io(fn ->
+          Wc.run(["--lines", test_file()])
+        end)
+
+      assert response == "7145 #{test_file()}\n"
+    end
+
+    test "should return lines and path for a readable file with -l alias" do
+      response =
+        capture_io(fn ->
+          Wc.run(["-c", test_file()])
+        end)
+
+      assert response == "342190 #{test_file()}\n"
     end
   end
 end

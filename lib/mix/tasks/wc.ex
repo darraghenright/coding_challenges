@@ -4,18 +4,22 @@ defmodule Mix.Tasks.Wc do
   """
   use Mix.Task
   alias CodingChallenges.Wc
+  require Logger
 
   @shortdoc "..."
   def run(args) do
-    parsed_options =
+    {opts, [file], _errors} =
       OptionParser.parse(args,
-        aliases: [c: :bytes],
-        strict: [bytes: :boolean]
+        aliases: [c: :bytes, l: :lines],
+        strict: [bytes: :boolean, lines: :boolean]
       )
 
-    with {[bytes: true], [file], _} <- parsed_options do
-      bytes = Wc.bytes!(file)
-      IO.puts("#{bytes} #{file}")
-    end
+    response =
+      case opts do
+        [bytes: true] -> Wc.bytes!(file)
+        [lines: true] -> Wc.lines!(file)
+      end
+
+    IO.puts("#{response} #{file}")
   end
 end

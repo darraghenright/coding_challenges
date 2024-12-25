@@ -28,4 +28,22 @@ defmodule CodingChallenges.WcTest do
       end
     end
   end
+
+  describe "lines!/1" do
+    test "should return the number of lines in the file" do
+      assert Wc.lines!(test_file()) == 7_145
+    end
+
+    test "should raise an error if the file does not exist" do
+      assert_raise File.Error, fn ->
+        Wc.lines!("non_existent_file.txt")
+      end
+    end
+
+    test "should raise an error if the file argument is not a binary" do
+      assert_raise FunctionClauseError, fn ->
+        Wc.lines!(123)
+      end
+    end
+  end
 end

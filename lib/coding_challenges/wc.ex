@@ -15,4 +15,15 @@ defmodule CodingChallenges.Wc do
       byte_size(chunk) + acc
     end)
   end
+
+  @doc """
+  Counts the number of lines in a given file.
+  Raises an error if the file does not exist.
+  """
+  @spec lines!(binary()) :: non_neg_integer()
+  def lines!(file) when is_binary(file) do
+    file
+    |> File.stream!()
+    |> Enum.count()
+  end
 end
