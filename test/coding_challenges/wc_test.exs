@@ -46,4 +46,22 @@ defmodule CodingChallenges.WcTest do
       end
     end
   end
+
+  describe "words!/1" do
+    test "should return the number of words in the file" do
+      assert Wc.words!(test_file()) == 58_164
+    end
+
+    test "should raise an error if the file does not exist" do
+      assert_raise File.Error, fn ->
+        Wc.words!("non_existent_file.txt")
+      end
+    end
+
+    test "should raise an error if the file argument is not a binary" do
+      assert_raise FunctionClauseError, fn ->
+        Wc.words!(123)
+      end
+    end
+  end
 end

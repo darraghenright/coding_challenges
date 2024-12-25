@@ -55,4 +55,24 @@ defmodule Mix.Tasks.WcTest do
       assert response == "342190 #{test_file()}\n"
     end
   end
+
+  describe "wc --words" do
+    test "should return words and path for a readable file" do
+      response =
+        capture_io(fn ->
+          Wc.run(["--words", test_file()])
+        end)
+
+      assert response == "58164 #{test_file()}\n"
+    end
+
+    test "should return words and path for a readable file with -w alias" do
+      response =
+        capture_io(fn ->
+          Wc.run(["-w", test_file()])
+        end)
+
+      assert response == "58164 #{test_file()}\n"
+    end
+  end
 end

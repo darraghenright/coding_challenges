@@ -26,4 +26,16 @@ defmodule CodingChallenges.Wc do
     |> File.stream!()
     |> Enum.count()
   end
+
+  @doc """
+  Counts the number of words in a given file.
+  Raises an error if the file does not exist.
+  """
+  @spec words!(binary()) :: non_neg_integer()
+  def words!(file) when is_binary(file) do
+    file
+    |> File.stream!()
+    |> Enum.flat_map(&String.split/1)
+    |> Enum.count()
+  end
 end
